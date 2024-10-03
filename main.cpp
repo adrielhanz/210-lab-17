@@ -13,11 +13,11 @@ struct Node {
 
 // Function prototypes
 void output(Node *);
-void addNodeHead (Node *, int);
-void addNodeTail (Node *, int);
-void deleteNode (Node *, int);
-void insertNode (Node *, int, int);
-void deleteList (Node *);
+void addNodeHead (Node *&, int);
+void addNodeTail (Node *&, int);
+void deleteNode (Node *&, int);
+void insertNode (Node *&, int, int);
+void deleteList (Node *&);
 
 int main() {
     Node *head = nullptr;
@@ -70,7 +70,7 @@ void output(Node * hd) {
 }
 
 // Insert a node to the head
-void addNodeHead (Node * head, int tmp_val){
+void addNodeHead (Node *& head, int tmp_val){
     Node *newVal = new Node;
         
     if (!head) { // if this is the first node, it's the new head
@@ -86,7 +86,7 @@ void addNodeHead (Node * head, int tmp_val){
 }
 
 // Insert a node to the tail
-void addNodeTail (Node * head, int tmp_val){
+void addNodeTail (Node *& head, int tmp_val){
     Node *newVal = new Node;
     newVal->value = tmp_val;
     newVal->next = nullptr;
@@ -103,11 +103,17 @@ void addNodeTail (Node * head, int tmp_val){
 }
 
 // Delete a node
-void deleteNode (Node * head, int position){
+void deleteNode (Node *& head, int position){
     Node * current = head;
-    output(head);
 
-    // traverse that many times and delete that node
+    // if deleting the first node
+    if (position == 1) {
+        head = current->next;
+        delete current;
+        return;
+    }
+
+    // if it's not the first, traverse that many times and delete that node
     current = head;
     Node *prev = head;
     for (int i = 0; i < (position - 1); i++)
@@ -127,7 +133,7 @@ void deleteNode (Node * head, int position){
 }
 
 // Insert a node
-void insertNode (Node * head, int position, int value){
+void insertNode (Node *& head, int position, int value){
     Node * current = head;
     Node * prev = head;
 
@@ -147,7 +153,7 @@ void insertNode (Node * head, int position, int value){
 }
 
 // Delete the entire list
-void deleteList (Node * head){
+void deleteList (Node *& head){
     Node * current = head;
     while (current) {
         head = current->next;
