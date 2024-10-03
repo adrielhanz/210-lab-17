@@ -1,3 +1,6 @@
+// COMSC-210 | Lab 17 | Adriel Chandra
+// IDE used: Visual Studio Code
+
 #include <iostream>
 using namespace std;
 
@@ -8,7 +11,13 @@ struct Node {
     Node *next;
 };
 
+// Function prototypes
 void output(Node *);
+void addNodeHead ();
+void addNodeTail ();
+void deleteNode ();
+void insertNode ();
+void deleteList ();
 
 int main() {
     Node *head = nullptr;
@@ -16,48 +25,17 @@ int main() {
 
     // create a linked list of size SIZE with random numbers 0-99
     for (int i = 0; i < SIZE; i++) {
-        int tmp_val = rand() % 100;
-        Node *newVal = new Node;
-        
-        // adds node at head
-        if (!head) { // if this is the first node, it's the new head
-            head = newVal;
-            newVal->next = nullptr;
-            newVal->value = tmp_val;
-        }
-        else { // its a second or subsequent node; place at the head
-            newVal->next = head;
-            newVal->value = tmp_val;
-            head = newVal;
-        }
+        addNodeHead (head, rand() % 100);
     }
     output(head);
 
     // deleting a node
-    Node * current = head;
     cout << "Which node to delete? " << endl;
-    output(head);
     int entry;
     cout << "Choice --> ";
     cin >> entry;
-
-    // traverse that many times and delete that node
-    current = head;
-    Node *prev = head;
-    for (int i = 0; i < (entry-1); i++)
-        if (i == 0)
-            current = current->next;
-        else {
-            current = current->next;
-            prev = prev->next;
-        }
-    // at this point, delete current and reroute pointers
-    if (current) {  // checks for current to be valid before deleting the node
-        prev->next = current->next;
-        delete current;
-        current = nullptr;
-    }
-    output(head);
+    deleteNode ();
+    output (head);
 
     // insert a node
     current = head;
@@ -99,6 +77,7 @@ int main() {
     return 0;
 }
 
+// Output the nodes
 void output(Node * hd) {
     if (!hd) {
         cout << "Empty list.\n";
@@ -112,3 +91,57 @@ void output(Node * hd) {
     }
     cout << endl;
 }
+
+// Insert a node to the head
+void addNodeHead (){
+    Node *newVal = new Node;
+        
+    // adds node at head
+    if (!head) { // if this is the first node, it's the new head
+        head = newVal;
+        newVal->next = nullptr;
+        newVal->value = tmp_val;
+    }
+    else { // its a second or subsequent node; place at the head
+        newVal->next = head;
+        newVal->value = tmp_val;
+        head = newVal;
+    }
+}
+
+// Insert a node to the tail
+void addNodeTail (){
+
+}
+
+// Delete a node
+void deleteNode (){
+    Node * current = head;
+    output(head);
+
+    // traverse that many times and delete that node
+    current = head;
+    Node *prev = head;
+    for (int i = 0; i < (entry-1); i++)
+        if (i == 0)
+            current = current->next;
+        else {
+            current = current->next;
+            prev = prev->next;
+        }
+    // at this point, delete current and reroute pointers
+    if (current) {  // checks for current to be valid before deleting the node
+        prev->next = current->next;
+        delete current;
+        current = nullptr;
+    }
+    output(head);
+}
+
+// Insert a node
+void insertNode (){
+
+}
+
+// Delete the entire list
+void deleteList ();
