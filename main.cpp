@@ -16,7 +16,7 @@ void output(Node *);
 void addNodeHead (Node *, int);
 void addNodeTail (Node *, int);
 void deleteNode (Node *, int);
-void insertNode (Node *, int);
+void insertNode (Node *, int, int);
 void deleteList (Node *);
 
 int main() {
@@ -36,17 +36,19 @@ int main() {
     int entry;
     cout << "Choice --> ";
     cin >> entry;
-    deleteNode ();
+    deleteNode (head, entry);
     output (head);
 
     // insert a node
-    current = head;
     cout << "After which node to insert 10000? " << endl;
     output (head);
-
+    cout << "Choice --> ";
+    cin >> entry;
+    insertNode (head, entry, 10000);
+    output (head);
 
     // deleting the linked list
-    deleteList();
+    deleteList(head);
     output(head);
 
     return 0;
@@ -85,20 +87,23 @@ void addNodeHead (Node * head, int value){
 
 // Insert a node to the tail
 void addNodeTail (Node * head, int value){
-    if (!head) { // if this is the first node, place at the tail
+    Node *newVal = new Node;
+    newVal->value = value;
+    newVal->next = nullptr;
+
+    if (!head) { // if empty list, it's the new head
         head = newVal;
-        newVal->next = nullptr;
-        newVal->value = tmp_val;
-    }
-    else { // its a last node, place at the very end
-        newVal->next = head;
-        newVal->value = tmp_val;
-        head = newVal;
+    } else { // if this is the last node, it's now the new last node
+        Node *current = head;
+        while (current->next) {
+            current = current->next;
+        }
+        current->next = newVal;
     }
 }
 
 // Delete a node
-void deleteNode (){
+void deleteNode (Node * head, int){
     Node * current = head;
     output(head);
 
@@ -122,16 +127,12 @@ void deleteNode (){
 }
 
 // Insert a node
-void insertNode (){
+void insertNode (Node * head, int position, int value){
     count = 1;
     while (current) {
         cout << "[" << count++ << "] " << current->value << endl;
         current = current->next;
     }
-    cout << "Choice --> ";
-    cin >> entry;
-    insertNode ();
-    output (head);
 
     current = head;
     prev = head;
@@ -147,12 +148,11 @@ void insertNode (){
     newnode->value = 10000;
     newnode->next = current;
     prev->next = newnode;
-    output(head);
 }
 
 // Delete the entire list
-void deleteList (){
-    current = head;
+void deleteList (Node * head){
+    Node * current = head;
     while (current) {
         head = current->next;
         delete current;
