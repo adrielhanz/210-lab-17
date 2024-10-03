@@ -70,7 +70,7 @@ void output(Node * hd) {
 }
 
 // Insert a node to the head
-void addNodeHead (Node * head, int value){
+void addNodeHead (Node * head, int tmp_val){
     Node *newVal = new Node;
         
     if (!head) { // if this is the first node, it's the new head
@@ -86,9 +86,9 @@ void addNodeHead (Node * head, int value){
 }
 
 // Insert a node to the tail
-void addNodeTail (Node * head, int value){
+void addNodeTail (Node * head, int tmp_val){
     Node *newVal = new Node;
-    newVal->value = value;
+    newVal->value = tmp_val;
     newVal->next = nullptr;
 
     if (!head) { // if empty list, it's the new head
@@ -103,14 +103,14 @@ void addNodeTail (Node * head, int value){
 }
 
 // Delete a node
-void deleteNode (Node * head, int){
+void deleteNode (Node * head, int position){
     Node * current = head;
     output(head);
 
     // traverse that many times and delete that node
     current = head;
     Node *prev = head;
-    for (int i = 0; i < (entry-1); i++)
+    for (int i = 0; i < (position - 1); i++)
         if (i == 0)
             current = current->next;
         else {
@@ -128,15 +128,11 @@ void deleteNode (Node * head, int){
 
 // Insert a node
 void insertNode (Node * head, int position, int value){
-    count = 1;
-    while (current) {
-        cout << "[" << count++ << "] " << current->value << endl;
-        current = current->next;
-    }
+    Node * current = head;
+    Node * prev = head;
 
-    current = head;
-    prev = head;
-    for (int i = 0; i < (entry); i++)
+    // traverse that many times
+    for (int i = 0; i < (position); i++)
         if (i == 0)
             current = current->next;
         else {
